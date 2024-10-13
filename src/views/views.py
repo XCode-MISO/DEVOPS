@@ -3,23 +3,29 @@ from datetime import datetime
 from src.models.models import Blacklisted, BlacklistedSchema
 from src.config.app_config import STATIC_TOKEN
 
+def validate_token(bearer):
+    if bearer is None or bearer == "":
+        return {
+            "msg": "Authorization header is not in the headers or bearer value is wrong"
+        }, 400
+    if len(bearer.split()) < 2:
+        return {"msg": "Token is not in the headers"}, 400
+
+    token = bearer.split()[1]
+
+    if token != STATIC_TOKEN:
+        return {"msg": "Unauthorized"}, 401
+    return {}, 200
+
 def post_add_email_to_blacklist(db, request):
     try:
         data = request.get_json()
 
         bearer = request.headers.get("Authorization")
-        if bearer is None or bearer == "":
-            return {
-                "msg": "Authorization header is not in the headers or bearer value is wrong"
-            }, 400
-        if len(bearer.split()) < 2:
-            return {"msg": "Token is not in the headers"}, 400
-
-        token = bearer.split()[1]
-
-        if token != STATIC_TOKEN:
-            return {"msg": "Unauthorized"}, 401
-
+        validationError, errorCode = validate_token(bearer)
+        if errorCode != 200:
+            return validationError, errorCode
+        
         email = data["email"]
         if str(email) == "":
             return {"msg": "The email is missing, please provide a valid email"}, 400
@@ -55,5 +61,29 @@ def post_add_email_to_blacklist(db, request):
             "id": new_blacklisted.id,
             "createdAt": new_blacklisted.time.isoformat(),
         }, 201
+    except Exception as e:
+        print(e)
+        return {"msg": str(e)}, 500
+
+
+def get_blacklisted_entries(db, request, email):
+    try:
+
+        bearer = request.headers.get("Authorization")
+
+        validError, errorCode = validate_token(bearer)
+        if errorCode != 200:
+            return validError, errorCode
+
+        if str(email) == "":
+            return {"msg": "The email is missing, please provide an email"}, 400
+
+        try:
+            blackmailed = db.session.query(Blacklisted).filter_by(email=email).first().__dict__
+            return {"blacklisted": True, "blocked_reason": str(blackmailed["blocked_reason"])}, 200
+        except Exception as e:
+            print(e)
+            return {"blacklisted": False, "blocked_reason": ""}, 200
+
     except Exception as e:
         return {"msg": str(e)}, 500
