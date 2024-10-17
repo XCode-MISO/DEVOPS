@@ -40,7 +40,8 @@
     export FLASK_APP=application.py
     flask run
     ```
-- Para ejecutar pruebas de manera local, en el archivo `application.py`, cambiar `env_file = find_dotenv('.env.test')` a este archivo para ejecutar en SQLite y correr el siguiente comando:
+### Instrucciones para la ejecución de pruebas de manera local
+- Para ejecutar pruebas de manera local, en el archivo `src/config/app_config.py`, cambiar `env_file = find_dotenv('.env.test')` a este archivo para ejecutar en SQLite y correr el siguiente comando:
     ```bash
     pytest tests/test_blacklist.py
     ```
