@@ -45,4 +45,4 @@
     ```bash
     pytest tests/test_blacklist.py
     ```
-    ***Recordando estar en el entorno correcto.***
+    ***Total de covertura: 87%***
