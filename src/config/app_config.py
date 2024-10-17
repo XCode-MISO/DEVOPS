@@ -1,6 +1,14 @@
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import os
+from dotenv import load_dotenv, find_dotenv
+
+# Load environment variables
+env_file = find_dotenv('.env.development')
+if env_file:
+    load_dotenv(env_file)
+else:
+    print("El archivo con variables de ambiente no se encontro.")
 
 # App variables
 APP_DEBUG = os.environ.get("FLASK_DEBUG") or 0
@@ -13,13 +21,17 @@ DB_NAME = os.environ.get("POSTGRES_DB")
 DB_PORT = os.environ.get("POSTGRES_PORT")
 DB_HOST = os.environ.get("POSTGRES_HOST")
 STATIC_TOKEN = os.environ.get("STATIC_TOKEN", 'static_token')
-DATABASE_URL = (f"postgresql+pg8000://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
+
+# Create database URL
+DATABASE_URL = f"postgresql+pg8000://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+# Print the database URL
+print("DATABASE_URL:", DATABASE_URL)
 
 database = SQLAlchemy()
 
 def init_db(app):
     environment = os.getenv("ENVIRONMENT")
-    
     if environment == "test":
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
     elif environment == "production":
@@ -30,7 +42,6 @@ def init_db(app):
     database.init_app(app)
 
     with app.app_context():
-        database.drop_all()
         database.create_all()
 
 def config_app(app):
