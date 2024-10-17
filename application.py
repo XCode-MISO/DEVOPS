@@ -5,7 +5,7 @@ from src.views.views  import post_add_email_to_blacklist, get_blacklisted_entrie
 from src.config.app_config import config_app, init_db, database, APP_DEBUG, APP_PORT
 
 # Load environment variables
-env_file = find_dotenv('.env.development')
+env_file = find_dotenv('.env.test')
 load_dotenv(env_file)
 
 # App configuration
