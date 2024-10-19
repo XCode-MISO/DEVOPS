@@ -15,6 +15,9 @@
 | Emerson Chaparro Ampa | e.chaparroa@uniandes.edu.co | [@echaparroa-uniandes](https://github.com/echaparroa-uniandes) | 
 | Juan Camilo Vallejos | j.vallejosg@uniandes.edu.co | [@juanca-uniandes](https://github.com/juanca-uniandes) | 
 
+### Diagrama 
+[Diagrama](https://github.com/CristianAAV/DEVOPS/wiki/Diagrama-E1)
+
 ### Instrucciones para la ejecución local
 - Crear contenedor para la BD de pruebas, puede utilizar el siguiente comando:
     ```bash
