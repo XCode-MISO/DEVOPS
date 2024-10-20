@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "9954684d-87ce-4124-9814-e7fbef219982",
+		"name": "Entrega-1-DevOps",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "38826606"
+	},
+	"item": [
+		{
+			"name": "HealthCheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{Base_URL}}/health",
+				"description": "Verificar el estado de salud del servidor."
+			},
+			"response": []
+		},
+		{
+			"name": "Email added to Blacklist - Ok",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"ca.ariasv1@uniandes.edu.co\",\n    \"app_uuid\": \"uuid_true\",\n    \"blocked_reason\": \"spam\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/blacklists",
+				"description": "Añadir Email a lista de Blacklist."
+			},
+			"response": []
+		},
+		{
+			"name": "Missing email Blacklist - Wrong",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"\",\n    \"app_uuid\": \"este_es_un_id\",\n    \"blocked_reason\": \"spam\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/blacklists"
+			},
+			"response": []
+		},
+		{
+			"name": "Missing app id Blacklist - Wrong",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"ca.ariasv1@uniandes.edu.co\",\n    \"app_uuid\": \"\",\n    \"blocked_reason\": \"spam\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/blacklists"
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid blocked reason Blacklist - Wrong",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"ca.ariasv1@uniandes.edu.co\",\n    \"app_uuid\": \"este_es_un_id\",\n    \"blocked_reason\": \"12345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/blacklists"
+			},
+			"response": []
+		},
+		{
+			"name": "Missing token Blacklist - Wrong",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"ca.ariasv1@uniandes.edu.co\",\n    \"app_uuid\": \"este_es_un_id\",\n    \"blocked_reason\": \"cualquier razon\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/blacklists"
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Email added to Blacklist - Ok",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{Base_URL}}/blacklists/ca.ariasv1@uniandes.edu.co"
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Email added to Blacklist - Wrong",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{Base_URL}}/blacklists/ca.ariasv100@uniandes.edu.co"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "{{token}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "static_token",
+			"type": "string"
+		},
+		{
+			"key": "Base_URL",
+			"value": "Localhost:5000",
+			"type": "default"
+		},
+		{
+			"value": "",
+			"type": "string"
+		}
+	]
+}
