@@ -29,7 +29,6 @@ def test_add_email_to_blacklist(client):
         'app_uuid': '12345',
         'blocked_reason': 'Spam activity'
     }
-
     response = client.post('/blacklists', headers=headers, data=json.dumps(data), content_type='application/json')
     assert response.status_code == 201
     assert 'id' in response.get_json()
@@ -41,7 +40,6 @@ def test_add_email_to_blacklist_unauthorized(client):
         'app_uuid': '12345',
         'blocked_reason': 'Spam activity'
     }
-
     response = client.post('/blacklists', data=json.dumps(data), content_type='application/json')
     assert response.status_code == 400
     assert response.get_json() == {"msg": "Authorization header is not in the headers or bearer value is wrong"}
@@ -55,10 +53,8 @@ def test_get_blacklisted_entries(client):
         'app_uuid': '12345',
         'blocked_reason': 'Spam activity'
     }
-
     # First add the email to the blacklist
     client.post('/blacklists', headers=headers, data=json.dumps(data), content_type='application/json')
-
     # Now get the blacklisted entry
     response = client.get('/blacklists/test@example.com', headers=headers)
     assert response.status_code == 200
@@ -71,7 +67,6 @@ def test_get_blacklisted_entries_not_found(client):
     headers = {
         'Authorization': f'Bearer {STATIC_TOKEN}'
     }
-
     response = client.get('/blacklists/notfound@example.com', headers=headers)
     assert response.status_code == 200
     assert response.get_json() == {
