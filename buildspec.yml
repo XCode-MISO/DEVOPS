@@ -28,7 +28,7 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo Building the Docker image...          
+      - echo Building the Docker image...      
       - docker build -t devops/ohio .
       - docker tag devops/ohio:latest 183295420248.dkr.ecr.us-east-2.amazonaws.com/devops/ohio:latest
   post_build:
