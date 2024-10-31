@@ -24,18 +24,18 @@ phases:
       - pytest tests/test_blacklist.py
       # CodeBuild se detiene aquí si pytest falla y marca el proceso como fallido
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 128053672390.dkr.ecr.us-east-2.amazonaws.com
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 183295420248.dkr.ecr.us-east-2.amazonaws.com
   build:
     commands:
       - echo Build started on `date`
-      - echo Building the Docker image...          
-      - docker build -t entrega02_app .
-      - docker tag entrega02_app:latest 128053672390.dkr.ecr.us-east-2.amazonaws.com/entrega02_app:latest
+      - echo Building the Docker image...      
+      - docker build -t devops/ohio .
+      - docker tag devops/ohio:latest 183295420248.dkr.ecr.us-east-2.amazonaws.com/devops/ohio:latest
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push 128053672390.dkr.ecr.us-east-2.amazonaws.com/entrega02_app:latest
+      - docker push 183295420248.dkr.ecr.us-east-2.amazonaws.com/devops/ohio:latest
 artifacts:
   files:
     - '**/*'
