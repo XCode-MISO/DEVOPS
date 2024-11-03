@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "eb5aca9a-f44b-4695-a299-3b97a30e86df",
+		"name": "Entrega-1-DevOps",
+		"description": "Servicio para añadir y comprobar el estado de un email dentro de una blacklist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "38826606"
+	},
+	"item": [
+		{
+			"name": "HealthCheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{Base_URL}}/health",
+				"description": "Verificar el estado de salud del servidor.\n\nNo requiere ningun parametro adicional."
+			},
+			"response": []
+		},
+		{
+			"name": "Email added to Blacklist - Ok",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"ca.ariasv1@uniandes.edu.co\",\n    \"app_uuid\": \"uuid_true\",\n    \"blocked_reason\": \"spam\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/blacklists",
+				"description": "Añadir Email a lista de Blacklist.\n\n- Requiere:\n    \n\nBearer Token: static_token\n\nBody:\n\n{  \n\"email\": \"Email que desa agregar a la blacklist\",  \n\"app_uuid\": \"el uuid de la aplicacion que lo agrega\",  \n\"blocked_reason\": \"Una razon de bloqueo (se puede dejar vacio - No puede superar los 255 caracteres)\"  \n}\n\n- Respuesta:\n    \n\n{\n\n\"createdAt\": \"Fecha de creacion del registro\",\n\n\"id\": id(en tipo de dato int)\n\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Missing email Blacklist - Wrong",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"\",\n    \"app_uuid\": \"este_es_un_id\",\n    \"blocked_reason\": \"spam\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/blacklists",
+				"description": "Añadir Email a lista de Blacklist sin email.\n\n- Requiere :\n    \n\nBearer Token: static_token\n\nBody:\n\n{  \n\"email\": \"Espacio vacio\",  \n\"app_uuid\": \"el uuid de la aplicacion que lo agrega\",  \n\"blocked_reason\": \"Una razon de bloqueo (se puede dejar vacio - No puede superar los 255 caracteres)\"  \n}\n\n- Respuesta:\n    \n\n{\n\n\"msg\": \"This email was already blacklisted\"\n\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Missing app id Blacklist - Wrong",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"ca.ariasv2@uniandes.edu.co\",\n    \"app_uuid\": \"\",\n    \"blocked_reason\": \"spam\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/blacklists",
+				"description": "Añadir Email a lista de Blacklist sin app id.\n\n- Requiere :\n    \n\nBearer Token: static_token\n\nBody:\n\n{  \n\"email\": \"Email que desa agregar a la blacklist\",  \n\"app_uuid\": \"Espacio vacio\",  \n\"blocked_reason\": \"Una razon de bloqueo que supere los 255\"  \n}\n\n- Respuesta:\n    \n\n{\n\n\"msg\": \"The block reason has to be less than 255 characters\"\n\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid blocked reason Blacklist - Wrong",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"ca.ariasv3@uniandes.edu.co\",\n    \"app_uuid\": \"este_es_un_id\",\n    \"blocked_reason\": \"12345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910123456789101234567891012345678910\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/blacklists",
+				"description": "Añadir Email a lista de Blacklist sin to.\n\n- Requiere :\n    \n\nBody:\n\n{  \n\"email\": \"Email que desa agregar a la blacklist\",  \n\"app_uuid\": \"el uuid de la aplicacion que lo agrega\",  \n\"blocked_reason\": \"Una razon de bloqueo (se puede dejar vacio - No puede superar los 255 caracteres)\"  \n}\n\n- Respuesta:\n    \n\n{\n\n\"msg\": \"The block reason has to be less than 255 characters\"\n\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Missing token Blacklist - Wrong",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"ca.ariasv1@uniandes.edu.co\",\n    \"app_uuid\": \"este_es_un_id\",\n    \"blocked_reason\": \"cualquier razon\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{Base_URL}}/blacklists",
+				"description": "Añadir Email a lista de Blacklist sin token o token invalido.\n\n- Requiere :\n    \n\nBody:\n\n{  \n\"email\": \"Email que desa agregar a la blacklist\",  \n\"app_uuid\": \"el uuid de la aplicacion que lo agrega\",  \n\"blocked_reason\": \"Una razon de bloqueo (se puede dejar vacio - No puede superar los 255 caracteres)\"  \n}\n\n- Respuesta:\n    \n\n{\n\n\"msg\": \"Authorization header is not in the headers or bearer value is wrong\"\n\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Email added to Blacklist - Ok",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{Base_URL}}/blacklists/ca.ariasv1@uniandes.edu.co",
+				"description": "Verificar Email esta lista de Blacklist que esta en el Blacklist.\n\n- Requiere :\n    \n\nBearer Token: static_token\n\n{{Base_URL}}/blacklists/{{Email_a_Verificar}}\n\n- Respuesta:\n    \n\n{\n\n\"blacklisted\": true,\n\n\"blocked_reason\": \"Razon del bloqueo\"\n\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Email added to Blacklist - Wrong",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{Base_URL}}/blacklists/ca.ariasv100@uniandes.edu.co",
+				"description": "Verificar Email esta lista de Blacklist que no esta en el Blacklist.\n\n- Requiere :\n    \n\nBearer Token: static_token\n\n{{Base_URL}}/blacklists/{{Email_a_Verificar}}\n\n- Respuesta:\n    \n\n{\n\n\"blacklisted\": false,\n\n\"blocked_reason\": \"Espacio vacio\"\n\n}"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "{{token}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "static_token",
+			"type": "string"
+		},
+		{
+			"key": "Base_URL",
+			"value": "http://entrega02appcontainer-env.eba-n7zwv4kd.us-east-2.elasticbeanstalk.com/",
+			"type": "default"
+		},
+		{
+			"value": "",
+			"type": "string"
+		}
+	]
+}
