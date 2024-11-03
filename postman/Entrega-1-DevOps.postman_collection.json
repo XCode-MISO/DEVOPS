@@ -202,7 +202,7 @@
 		},
 		{
 			"key": "Base_URL",
-			"value": "http://immutable-beanstalk-env.eba-twmikgch.us-east-1.elasticbeanstalk.com",
+			"value": "http://entrega02appcontainer-env.eba-n7zwv4kd.us-east-2.elasticbeanstalk.com/",
 			"type": "default"
 		},
 		{
