@@ -1,0 +1,58 @@
+{
+  "executionRoleArn": "arn:aws:iam::128053672390:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "portMappings": [
+        {
+          "hostPort": 5000,
+          "protocol": "tcp",
+          "containerPort": 5000
+        }
+      ],
+      "image": "<IMAGE1_NAME>",
+      "essential": true,
+      "name": "Container-app-python",
+      "environment": [
+        {
+          "name": "POSTGRES_USER",
+          "value": "postgres_user"
+        },
+        {
+          "name": "POSTGRES_PASSWORD",
+          "value": "postgres_pass"
+        },
+        {
+          "name": "POSTGRES_DB",
+          "value": "postgres_db"
+        },
+        {
+          "name": "POSTGRES_PORT",
+          "value": "5432"
+        },
+        {
+          "name": "POSTGRES_HOST",
+          "value": "161.132.40.204"
+        },
+        {
+          "name": "STATIC_TOKEN",
+          "value": "static_token"
+        },
+        {
+          "name": "ENVIRONMENT",
+          "value": "production"
+        },
+        {
+          "name": "SQLALCHEMY_DATABASE_URI",
+          "value": "sqlite:///:memory:"
+        }        
+      ]
+    }
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "512",
+  "memory": "1024",
+  "family": "Task-app-python"
+}
