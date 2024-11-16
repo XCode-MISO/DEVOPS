@@ -22,7 +22,6 @@ def app_params():
     DB_HOST = os.environ.get("POSTGRES_HOST")
     STATIC_TOKEN = os.environ.get("STATIC_TOKEN", 'static_token')
     ENVIRONMENT = os.getenv("ENVIRONMENT")
-    
     return {"DB_HOST": DB_HOST, "DB_USER": DB_USER, "DB_PASSWORD": DB_PASSWORD, "DB_NAME": DB_NAME, "DB_PORT": DB_PORT, "DB_HOST": DB_HOST, "STATIC_TOKEN": STATIC_TOKEN, "ENVIRONMENT": ENVIRONMENT}, 200
 
 @application.route("/health", methods=["GET"])
