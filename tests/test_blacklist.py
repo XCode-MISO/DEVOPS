@@ -17,7 +17,7 @@ def client(test_app):
 
 def test_health_check(client):
     response = client.get('/health')
-    assert response.status_code == 400
+    assert response.status_code == 200
     assert response.get_json() == {"msg": "Healthy"}
 
 def test_add_email_to_blacklist(client):
