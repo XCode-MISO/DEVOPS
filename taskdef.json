@@ -35,7 +35,7 @@
         },
         {
           "name": "STATIC_TOKEN",
-          "value": "static_token"
+          "value": ""
         },
         {
           "name": "ENVIRONMENT",
