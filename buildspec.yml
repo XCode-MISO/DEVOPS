@@ -29,7 +29,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...      
-      - docker build -t python_app .
+      - docker build --build-arg newrelic_license=$NEWRELIC_LICENSE -t python_app .
       - docker tag python_app:latest 183295420248.dkr.ecr.us-east-2.amazonaws.com/python_app:latest
   post_build:
     commands:
