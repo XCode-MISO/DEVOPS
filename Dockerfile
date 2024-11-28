@@ -15,7 +15,7 @@ ARG newrelic_license
 
 ##Confguración New Relic
 RUN pip install newrelic
-ENV NEW_RELIC_APP_NAME="docker"
+ENV NEW_RELIC_APP_NAME="fargate-python-app-cicd"
 ENV NEW_RELIC_LOG=stdout
 ENV NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
 #INGEST_License
